@@ -2,7 +2,7 @@ def findMid(term)
     mid = 0
     n = term.length
     count = 1
-    for i in (1..n) do
+    for i in (1...n) do
         if term[i] == "["
             count = count + 1
         end
@@ -27,7 +27,7 @@ def parse(term)
         right = term[mid+2..n-2]
         return parse(left) && parse(right)
     elsif symbol == "("
-        if term[1] != "\\" || term[3] != "."
+        if term[1] != "\\" || term[3] != "." || term[2] > 'z' || term[2] < 'a'
             return false
         end 
         n = term.length
