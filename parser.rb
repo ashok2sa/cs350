@@ -1,16 +1,30 @@
-def parse(term)
-    symbol = term[0]
-    if symbol == "[" 
-        n = term.length
-        mid = 0
-        for i in (1..n) do
-            if term[i] == "]"
+def findMid(term)
+    mid = 0
+    n = term.length
+    count = 1
+    for i in (1..n) do
+        if term[i] == "["
+            count = count + 1
+        end
+        if term[i] == "]"
+            count = count-1
+            if count == 0
                 mid = i
                 break
             end
         end
-        left = term[1..i-1]
-        right = term[i+2..n-2]
+    end
+    return mid
+end
+
+def parse(term)
+    symbol = term[0]
+    if symbol == "[" 
+        n = term.length
+        mid = findMid(term)
+        
+        left = term[1..mid-1]
+        right = term[mid+2..n-2]
         return parse(left) && parse(right)
     elsif symbol == "("
         if term[1] != "\\" || term[3] != "."
@@ -23,7 +37,6 @@ def parse(term)
         tempLambda = term[4..n-2]
         return parse(tempLambda)
     else
-        # all symbols has to be variables 
         n = term.length
         if n == 1
             return true
@@ -38,7 +51,7 @@ end
 term1 = "x"
 term2 = "(\\x." + term1 +")"
 term3 = "[" + term1 + "][" + term2 + "]"
-    
+term4 = "[" + term3 + "][" + term2 + "]"
 
 if parse(term3) 
     puts "Yes, given term is valid lambda term"
