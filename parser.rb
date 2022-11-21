@@ -38,7 +38,7 @@ def parse(term)
         return parse(tempLambda)
     else
         n = term.length
-        if n == 1
+        if n == 1 && term[0] < 'z' && term[0] > 'a'
             return true
         else
             return false
